@@ -1,20 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:futamap/screens/auth/onboarding.dart';
 
 void main() {
-  runApp(const MainApp());
+  runApp(App(const OnboardingScreen()));
 }
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+class App extends StatelessWidget {
+  Widget home;
+  App(this.home, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+    return MaterialApp(
+      title: "Futa-Map",
+      theme: ThemeData(
+        scaffoldBackgroundColor: const Color(0xFFF9FAFB),
       ),
+      home: home,
     );
   }
 }
