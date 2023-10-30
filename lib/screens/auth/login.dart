@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:futamap/components/buttons.dart';
 import 'package:futamap/components/textfields.dart';
+import 'package:futamap/screens/auth/forgotPassword.dart';
 import 'package:futamap/screens/auth/signup.dart';
 import '../../theme/colors.dart' as futa_map_colors;
 
@@ -109,7 +110,13 @@ class _LoginScreenState extends State<LoginScreen> {
                       Align(
                         alignment: Alignment.centerRight,
                         child: TextButton(
-                          onPressed: () => {},
+                          onPressed: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  const ForgotPasswordScreen(),
+                            ),
+                          ),
                           child: const Text(
                             "Forgot Password?",
                             style: TextStyle(
