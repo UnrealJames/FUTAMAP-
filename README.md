@@ -1,2 +1,3 @@
-# FUTAMAP-
-School Navigation Mobile Map
+# futamap
+
+A new Flutter project.
