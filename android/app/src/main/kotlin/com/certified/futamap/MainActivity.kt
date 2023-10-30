@@ -1,4 +1,4 @@
-package com.example.futamap
+package com.certified.futamap
 
 import io.flutter.embedding.android.FlutterActivity
 

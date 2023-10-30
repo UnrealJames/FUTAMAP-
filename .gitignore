@@ -8,6 +8,9 @@
 build/
 ios/.generated/
 packages
+windows/
+macos/
+web/
 pubspec.lock
 .flutter-plugins
 .flutter-plugins-dependencies

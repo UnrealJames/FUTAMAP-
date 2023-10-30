@@ -3,6 +3,7 @@ import 'package:futamap/components/buttons.dart';
 import 'package:futamap/components/textfields.dart';
 import 'package:futamap/screens/auth/forgotPassword.dart';
 import 'package:futamap/screens/auth/signup.dart';
+import 'package:futamap/screens/home/home.dart';
 import '../../theme/colors.dart' as futa_map_colors;
 
 class LoginScreen extends StatefulWidget {
@@ -129,7 +130,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       const SizedBox(height: 24),
                       defaultButton(
                         width: _deviceWidth * .05,
-                        onPressed: () => {},
+                        onPressed: () => {
+                          Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(
+                              builder: (context) => const HomeScreen(),
+                            ),
+                            (Route<dynamic> route) => false,
+                          )
+                        },
                         text: "Login",
                         backgroundColor: futa_map_colors.Colors.primary,
                         textColor: futa_map_colors.Colors.onPrimary,
