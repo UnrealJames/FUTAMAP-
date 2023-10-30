@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import '../../theme/colors.dart' as futa_map_colors;
 
 Widget textField(
     {required double width,
     TextInputType? keyboardType,
     String? hintText,
+    Color? backgroundColor,
     bool readOnly = false,
     bool enabled = true,
     void Function(String)? onChanged,
@@ -21,7 +23,7 @@ Widget textField(
       ),
       keyboardType: keyboardType,
       decoration: InputDecoration(
-        fillColor: const Color(0xFFF9FAFB),
+        fillColor: backgroundColor,
         filled: true,
         enabledBorder: const OutlineInputBorder(
           borderSide: BorderSide(
@@ -32,7 +34,7 @@ Widget textField(
         focusedBorder: const OutlineInputBorder(
           borderSide: BorderSide(
             width: 2,
-            color: Color(0xFF3734A9),
+            color: futa_map_colors.Colors.primary,
           ),
           borderRadius: BorderRadius.all(Radius.circular(16)),
         ),
@@ -48,6 +50,7 @@ Widget textField(
 Widget passwordTextField(
     {required double width,
     String? hintText,
+    Color? backgroundColor,
     required bool showPassword,
     void Function(String)? onChanged,
     void Function()? onPressed}) {
@@ -65,7 +68,7 @@ Widget passwordTextField(
       enableSuggestions: false,
       autocorrect: false,
       decoration: InputDecoration(
-        fillColor: const Color(0xFFF9FAFB),
+        fillColor: backgroundColor,
         filled: true,
         enabledBorder: const OutlineInputBorder(
           borderSide: BorderSide(
@@ -76,7 +79,7 @@ Widget passwordTextField(
         focusedBorder: const OutlineInputBorder(
           borderSide: BorderSide(
             width: 2,
-            color: Color(0xFF3734A9),
+            color: futa_map_colors.Colors.primary,
           ),
           borderRadius: BorderRadius.all(Radius.circular(16)),
         ),

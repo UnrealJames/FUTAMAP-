@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:futamap/components/buttons.dart';
 import 'package:futamap/components/textfields.dart';
-import 'package:futamap/screens/auth/login.dart';
 import 'package:futamap/screens/auth/signup.dart';
 import '../../theme/colors.dart' as futa_map_colors;
 
-class SignupScreen extends StatefulWidget {
-  const SignupScreen({super.key});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
   @override
-  State<StatefulWidget> createState() => _SignupScreenState();
+  State<StatefulWidget> createState() => _LoginScreenState();
 }
 
-class _SignupScreenState extends State<SignupScreen> {
+class _LoginScreenState extends State<LoginScreen> {
   late double _deviceHeight, _deviceWidth;
   var showPassword = false;
   @override
@@ -20,7 +19,6 @@ class _SignupScreenState extends State<SignupScreen> {
     _deviceHeight = MediaQuery.of(context).size.height;
     _deviceWidth = MediaQuery.of(context).size.width;
 
-    var name = "";
     var email = '';
     var password = '';
 
@@ -49,7 +47,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       const Align(
                         alignment: Alignment.center,
                         child: Text(
-                          "Create Account",
+                          "Login",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 22,
@@ -59,30 +57,12 @@ class _SignupScreenState extends State<SignupScreen> {
                       ),
                       const SizedBox(height: 12),
                       const Text(
-                        "Kindly provide the few details below and we will setup your account ",
+                        "Welcome back, provide your login details to login to your account",
                         style: TextStyle(
                           color: futa_map_colors.Colors.onSurface,
                           fontSize: 14,
                           fontWeight: FontWeight.w400,
                         ),
-                      ),
-                      const SizedBox(height: 24),
-                      const Text(
-                        "Display Name",
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: futa_map_colors.Colors.onSurface),
-                      ),
-                      const SizedBox(height: 8),
-                      textField(
-                        width: _deviceWidth,
-                        backgroundColor:
-                            futa_map_colors.Colors.primaryContainer,
-                        hintText: 'eg James Oluseyi',
-                        onChanged: (p0) => setState(() {
-                          name = p0;
-                        }),
                       ),
                       const SizedBox(height: 24),
                       const Text(
@@ -126,11 +106,24 @@ class _SignupScreenState extends State<SignupScreen> {
                           });
                         },
                       ),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: TextButton(
+                          onPressed: () => {},
+                          child: const Text(
+                            "Forgot Password?",
+                            style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: futa_map_colors.Colors.primary),
+                          ),
+                        ),
+                      ),
                       const SizedBox(height: 24),
                       defaultButton(
                         width: _deviceWidth * .05,
                         onPressed: () => {},
-                        text: "Create Account",
+                        text: "Login",
                         backgroundColor: futa_map_colors.Colors.primary,
                         textColor: futa_map_colors.Colors.onPrimary,
                       ),
@@ -147,9 +140,9 @@ class _SignupScreenState extends State<SignupScreen> {
                         ),
                       ),
                       const SizedBox(height: 16),
-                      googleButton(width: _deviceWidth * .05, signin: false),
+                      googleButton(width: _deviceWidth * .05, signin: true),
                       const SizedBox(height: 16),
-                      appleButton(width: _deviceWidth * .05, signin: false),
+                      appleButton(width: _deviceWidth * .05, signin: true),
                     ],
                   ),
                 ),
@@ -164,7 +157,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Text(
-                          "Already have an account?",
+                          "New to FUTA-MAP?",
                           style: TextStyle(
                             color: futa_map_colors.Colors.onSurface,
                             fontWeight: FontWeight.w600,
@@ -175,11 +168,11 @@ class _SignupScreenState extends State<SignupScreen> {
                           onPressed: () => Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const LoginScreen(),
+                              builder: (context) => const SignupScreen(),
                             ),
                           ),
                           child: const Text(
-                            "Sign in.",
+                            "Sign up.",
                             style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,

@@ -25,4 +25,7 @@ abstract final class Colors {
   static const Color onBackground = Color(0xFF1A1C1E);
   static const Color surface = Color(0xFFFAF9FC);
   static const Color onSurface = Color(0xFF1A1C1E);
+
+  static const Color white = Color(0xFFFFFFFF);
+  static const Color black = Color(0xFF000000);
 }

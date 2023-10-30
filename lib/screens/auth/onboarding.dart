@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:futamap/components/buttons.dart';
+import 'package:futamap/screens/auth/login.dart';
 import 'package:futamap/screens/home/home.dart';
 import 'package:vector_graphics/vector_graphics.dart';
 import '../../theme/colors.dart' as futa_map_colors;
@@ -53,69 +55,41 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   ),
                   Column(
                     children: [
-                      Container(
-                        margin: const EdgeInsets.only(top: 16),
+                      defaultButton(
                         width: _deviceWidth * .8,
-                        height: 50,
-                        child: OutlinedButton(
-                          onPressed: () {
-                            Navigator.of(context).pushAndRemoveUntil(
-                              MaterialPageRoute(
-                                  builder: (context) => const HomeScreen()),
-                              (Route<dynamic> route) => false,
-                            );
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //     builder: (context) => const HomeScreen(),
-                            //   ),
-                            // );
-                          },
-                          style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                                futa_map_colors.Colors.primaryContainer),
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(50),
-                              ),
+                        text: "Get Started",
+                        backgroundColor:
+                            futa_map_colors.Colors.primaryContainer,
+                        textColor: futa_map_colors.Colors.onPrimaryContainer,
+                        onPressed: () {
+                          Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(
+                              builder: (context) => const HomeScreen(),
                             ),
-                          ),
-                          child: const Text(
-                            "Get Started",
-                            style: TextStyle(
-                              color: futa_map_colors.Colors.onPrimaryContainer,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14,
-                            ),
-                          ),
-                        ),
+                            (Route<dynamic> route) => false,
+                          );
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(
+                          //     builder: (context) => const HomeScreen(),
+                          //   ),
+                          // );
+                        },
                       ),
-                      Container(
-                        margin: const EdgeInsets.only(top: 16),
+                      const SizedBox(height: 16),
+                      defaultButton(
                         width: _deviceWidth * .8,
-                        height: 50,
-                        child: OutlinedButton(
-                          onPressed: () => {},
-                          style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                                futa_map_colors.Colors.onBackground),
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(50),
-                              ),
+                        text: "Login",
+                        backgroundColor: futa_map_colors.Colors.onBackground,
+                        textColor: futa_map_colors.Colors.background,
+                        onPressed: () => {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const LoginScreen(),
                             ),
-                          ),
-                          child: const Text(
-                            "Login",
-                            style: TextStyle(
-                              color: futa_map_colors.Colors.onPrimary,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14,
-                            ),
-                          ),
-                        ),
+                          )
+                        },
                       ),
                     ],
                   ),
