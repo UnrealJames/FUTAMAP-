@@ -10,11 +10,11 @@
 		</data>
 		<key>flutter_assets/AssetManifest.bin</key>
 		<data>
-		21tVqbIV90TbglF4ZJhNBz8uj4w=
+		I4pDdRI495L9RtCNb7+P4AqrytA=
 		</data>
 		<key>flutter_assets/AssetManifest.json</key>
 		<data>
-		vyGp6PvFo4RvsFtPoIWeCReyIC8=
+		9G/NqaIBpws3k6JAhwgt/AVOyQs=
 		</data>
 		<key>flutter_assets/FontManifest.json</key>
 		<data>
@@ -22,7 +22,19 @@
 		</data>
 		<key>flutter_assets/NOTICES.Z</key>
 		<data>
-		NU8Rt3P0sOOt1WoXkziHC1UXKJo=
+		xAhz7hhPFOeFhvB0zmZT9nsymlI=
+		</data>
+		<key>flutter_assets/assets/svgs/futa_map_logo.svg</key>
+		<data>
+		DZ2x/uraQtkQy0eT/M/niR6vW20=
+		</data>
+		<key>flutter_assets/assets/svgs/futa_map_logo.svg.vec</key>
+		<data>
+		vBl/kxqGuU5KXehFo48GU7K9EQ0=
+		</data>
+		<key>flutter_assets/assets/svgs/futa_map_logo_test.svg</key>
+		<data>
+		s788RsD0G3ev2Pdx1+PhnpK/bxY=
 		</data>
 		<key>flutter_assets/fonts/MaterialIcons-Regular.otf</key>
 		<data>
@@ -34,7 +46,7 @@
 		</data>
 		<key>flutter_assets/kernel_blob.bin</key>
 		<data>
-		Q92hG8/Cm3GPPmQjiMQvYJ7j0Bc=
+		dMqCQ8VUqHctgKS3e0Vy1HgF58s=
 		</data>
 		<key>flutter_assets/shaders/ink_sparkle.frag</key>
 		<data>
@@ -51,14 +63,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			9WbMb8zGVzZcAZeszzp9b4D4Ugn/Zm/3dPTcvFJKqEI=
+			5uyu4O9cDNixBGYJSy3yeNIzupxQ34Vi8mhRoSfBIUI=
 			</data>
 		</dict>
 		<key>flutter_assets/AssetManifest.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=
+			gpRWOznq+YaTn9Ds+x6pM0Ux/NmaQ9hHLvCXbMqr1kE=
 			</data>
 		</dict>
 		<key>flutter_assets/FontManifest.json</key>
@@ -72,7 +84,28 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			owy2XlFw1h/LQq7hSV/uw66/73brfftZfcn4HD446EQ=
+			eesg9oV/3wHe0UFT32+ffBGhu1dzh2wsR1I2HLP8MfU=
+			</data>
+		</dict>
+		<key>flutter_assets/assets/svgs/futa_map_logo.svg</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			31eiZujNogw9uVuOl6HI0G6oUFPtlCD0aos+F7rEL2s=
+			</data>
+		</dict>
+		<key>flutter_assets/assets/svgs/futa_map_logo.svg.vec</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			shvGItuLQljpylLiEPv7PoKq6uy1defwgw/xyGGPHLc=
+			</data>
+		</dict>
+		<key>flutter_assets/assets/svgs/futa_map_logo_test.svg</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			2K8bnojg4mrXU2N7yxV5jBglhzoYF3x8FKiO5YE/gv4=
 			</data>
 		</dict>
 		<key>flutter_assets/fonts/MaterialIcons-Regular.otf</key>
@@ -93,7 +126,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			8CLGwYZu3Q5YibQ2uV+kEaOOLHHEMB6aJOcq37iggZw=
+			G4Lp78a/0XIGKgG3IERKedG27cWzgXdoAmqiRMH+X3w=
 			</data>
 		</dict>
 		<key>flutter_assets/shaders/ink_sparkle.frag</key>
