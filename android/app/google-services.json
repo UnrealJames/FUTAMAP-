@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "641927001428",
+    "project_id": "futa-map-bd9c9",
+    "storage_bucket": "futa-map-bd9c9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:641927001428:android:72ae8f79a6fa3e880c44c1",
+        "android_client_info": {
+          "package_name": "com.certified.futamap"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "641927001428-kd130gc6foo1aahvt2tfgic501pdljfr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSTXVztCIo8QofzTaWnxIsa7Ve_avqnq0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "641927001428-kd130gc6foo1aahvt2tfgic501pdljfr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>641927001428-k9v2l409oset2o87djoq6kggrvntq1am.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.641927001428-k9v2l409oset2o87djoq6kggrvntq1am</string>
+	<key>API_KEY</key>
+	<string>AIzaSyD13am4sI5b6bfdltExB8AS426_ACtI-0w</string>
+	<key>GCM_SENDER_ID</key>
+	<string>641927001428</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.certified.futamap</string>
+	<key>PROJECT_ID</key>
+	<string>futa-map-bd9c9</string>
+	<key>STORAGE_BUCKET</key>
+	<string>futa-map-bd9c9.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:641927001428:ios:54dc7bcd2db89f4f0c44c1</string>
+</dict>
+</plist>
