@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:futamap/components/buttons.dart';
 import 'package:futamap/components/textfields.dart';
@@ -129,7 +130,17 @@ class _SignupScreenState extends State<SignupScreen> {
                       const SizedBox(height: 24),
                       defaultButton(
                         width: _deviceWidth * .05,
-                        onPressed: () => {},
+                        onPressed: () {
+                          // UserCredential? userCredential;
+                          // _createAccount(email, password).whenComplete(
+                          //   () => Navigator.push(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //       builder: (context) => const LoginScreen(),
+                          //     ),
+                          //   ),
+                          // );
+                        },
                         text: "Create Account",
                         backgroundColor: futa_map_colors.Colors.primary,
                         textColor: futa_map_colors.Colors.onPrimary,
@@ -194,5 +205,28 @@ class _SignupScreenState extends State<SignupScreen> {
             )),
       ),
     );
+  }
+
+  Future<UserCredential?> _createAccount(String email, String password) async {
+    try {
+      final credential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      return credential;
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text('The password provided is too weak.')));
+      } else if (e.code == 'email-already-in-use') {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text('The account already exists for that email.')));
+      }
+      return null;
+    } catch (e) {
+      print(e);
+      return null;
+    }
   }
 }
