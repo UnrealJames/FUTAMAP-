@@ -18,6 +18,7 @@ class App extends StatelessWidget {
     ]);
     return MaterialApp(
       title: "Futa-Map",
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         scaffoldBackgroundColor: const Color(0xFFF9FAFB),
       ),
