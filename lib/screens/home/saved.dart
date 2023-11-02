@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:futamap/screens/auth/login.dart';
 import 'package:vector_graphics/vector_graphics.dart';
 import '../../theme/colors.dart' as futa_map_colors;
 
@@ -46,7 +47,12 @@ class _SavedScreenState extends State<SavedScreen> {
                 width: _deviceWidth * .8,
                 height: 50,
                 child: OutlinedButton(
-                  onPressed: () => {},
+                  onPressed: () => Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(
+                      builder: (context) => const LoginScreen(),
+                    ),
+                    (Route<dynamic> route) => false,
+                  ),
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(
                         futa_map_colors.Colors.onBackground),

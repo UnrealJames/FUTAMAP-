@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:futamap/screens/home/navigation.dart';
 import 'package:futamap/screens/home/places.dart';
 import 'package:futamap/screens/home/saved.dart';
 import '../../theme/colors.dart' as futa_map_colors;
@@ -68,11 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: <Widget>[
         const SavedScreen(),
-        Container(
-          color: Colors.green,
-          alignment: Alignment.center,
-          child: const Text('Page 2'),
-        ),
+        const NavigationScreen(),
         const PlacesScreen(),
       ][currentPageIndex],
     );
