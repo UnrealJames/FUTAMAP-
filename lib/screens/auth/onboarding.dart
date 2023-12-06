@@ -4,6 +4,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:futamap/components/buttons.dart';
 import 'package:futamap/screens/auth/login.dart';
 import 'package:futamap/screens/home/home.dart';
+import 'package:futamap/util/util.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:vector_graphics/vector_graphics.dart';
 import '../../theme/colors.dart' as futa_map_colors;
 
@@ -16,6 +18,12 @@ class OnboardingScreen extends StatefulWidget {
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
   late double _deviceHeight, _deviceWidth;
+
+  @override
+  void initState() {
+    super.initState();
+    handleLocationPermission(context);
+  }
 
   @override
   Widget build(BuildContext context) {
