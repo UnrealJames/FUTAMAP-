@@ -13,3 +13,5 @@ google_maps_flutter=/Users/certified/.pub-cache/hosted/pub.dev/google_maps_flutt
 google_maps_flutter_android=/Users/certified/.pub-cache/hosted/pub.dev/google_maps_flutter_android-2.5.2/
 google_maps_flutter_ios=/Users/certified/.pub-cache/hosted/pub.dev/google_maps_flutter_ios-2.3.2/
 google_maps_flutter_web=/Users/certified/.pub-cache/hosted/pub.dev/google_maps_flutter_web-0.5.4+2/
+location=/Users/certified/.pub-cache/hosted/pub.dev/location-5.0.3/
+location_web=/Users/certified/.pub-cache/hosted/pub.dev/location_web-4.2.0/

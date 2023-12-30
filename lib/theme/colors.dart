@@ -28,4 +28,6 @@ abstract final class Colors {
 
   static const Color white = Color(0xFFFFFFFF);
   static const Color black = Color(0xFF000000);
+
+  static const Color yellow = Color(0xFFE0A816);
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:futamap/screens/auth/onboarding.dart';
+import 'package:futamap/screens/home/place_detail.dart';
 
 void main() {
   runApp(App(const OnboardingScreen()));
@@ -23,6 +24,9 @@ class App extends StatelessWidget {
         scaffoldBackgroundColor: const Color(0xFFF9FAFB),
       ),
       home: home,
+      routes: {
+        PlaceDetailScreen.routeName: (context) => const PlaceDetailScreen(),
+      },
     );
   }
 }
