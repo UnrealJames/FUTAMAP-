@@ -67,7 +67,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '641927001428',
     projectId: 'futa-map-bd9c9',
     storageBucket: 'futa-map-bd9c9.appspot.com',
-    iosClientId: '641927001428-k9v2l409oset2o87djoq6kggrvntq1am.apps.googleusercontent.com',
+    iosClientId:
+        '641927001428-k9v2l409oset2o87djoq6kggrvntq1am.apps.googleusercontent.com',
     iosBundleId: 'com.certified.futamap',
   );
 
@@ -77,7 +78,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '641927001428',
     projectId: 'futa-map-bd9c9',
     storageBucket: 'futa-map-bd9c9.appspot.com',
-    iosClientId: '641927001428-9a9uttq9ud3mc4vkhpe3hbrhl6ttdf33.apps.googleusercontent.com',
+    iosClientId:
+        '641927001428-9a9uttq9ud3mc4vkhpe3hbrhl6ttdf33.apps.googleusercontent.com',
     iosBundleId: 'com.example.futamap.RunnerTests',
   );
 }

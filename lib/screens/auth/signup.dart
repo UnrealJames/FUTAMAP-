@@ -1,9 +1,10 @@
+// ignore_for_file: unused_local_variable, unused_element
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:futamap/components/buttons.dart';
 import 'package:futamap/components/textfields.dart';
 import 'package:futamap/screens/auth/login.dart';
-import 'package:futamap/screens/auth/signup.dart';
 import '../../theme/colors.dart' as futa_map_colors;
 
 class SignupScreen extends StatefulWidget {
@@ -225,7 +226,7 @@ class _SignupScreenState extends State<SignupScreen> {
       }
       return null;
     } catch (e) {
-      print(e);
+      debugPrint('$e');
       return null;
     }
   }

@@ -8,14 +8,16 @@ class StarRating extends StatelessWidget {
   final double rating;
   final RatingChangeCallback onRatingChanged;
   final Color color;
-  double size = 28;
+  final double size;
 
-  StarRating(
-      {this.starCount = 5,
-      required this.rating,
-      required this.onRatingChanged,
-      this.color = futa_map_colors.Colors.yellow,
-      this.size = 24});
+  const StarRating({
+    super.key,
+    this.starCount = 5,
+    required this.rating,
+    required this.onRatingChanged,
+    this.color = futa_map_colors.Colors.yellow,
+    this.size = 24,
+  });
 
   Widget buildStar(BuildContext context, int index) {
     Icon icon;

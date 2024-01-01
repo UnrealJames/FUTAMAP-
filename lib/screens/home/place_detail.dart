@@ -4,8 +4,6 @@ import 'package:futamap/components/buttons.dart';
 import 'package:futamap/components/rating_bar.dart';
 import 'package:futamap/data/model/location.dart';
 import 'package:futamap/screens/home/navigation.dart';
-import 'package:futamap/screens/home/places.dart';
-import 'package:futamap/screens/home/saved.dart';
 import '../../theme/colors.dart' as futa_map_colors;
 import 'package:collection/collection.dart';
 
@@ -43,10 +41,8 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
           SizedBox(
             width: _deviceWidth,
             height: _deviceHeight * .45,
-            child: Expanded(
-              child: Container(
-                color: Colors.blue,
-              ),
+            child: Container(
+              color: Colors.blue,
             ),
           ),
           Container(
@@ -113,7 +109,7 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
                   onPressed: () => {
                     Navigator.pushNamed(
                       context,
-                      PlaceDetailScreen.routeName,
+                      NavigationScreen.routeName,
                       arguments: args.latLng,
                     )
                   },

@@ -12,14 +12,10 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late double _deviceHeight, _deviceWidth;
   int currentPageIndex = 1;
 
   @override
   Widget build(BuildContext context) {
-    _deviceHeight = MediaQuery.of(context).size.height;
-    _deviceWidth = MediaQuery.of(context).size.width;
-
     return Scaffold(
       backgroundColor: futa_map_colors.Colors.surface,
       bottomNavigationBar: NavigationBar(

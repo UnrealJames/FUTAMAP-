@@ -1,11 +1,10 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:futamap/components/location.dart';
 import 'package:futamap/data/model/location.dart';
-import 'package:futamap/components/textfields.dart';
 import 'package:futamap/screens/home/place_detail.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:vector_graphics/vector_graphics.dart';
 import '../../theme/colors.dart' as futa_map_colors;
 import 'package:collection/collection.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -18,12 +17,11 @@ class PlacesScreen extends StatefulWidget {
 }
 
 class _PlacesScreenState extends State<PlacesScreen> {
-  late double _deviceHeight, _deviceWidth;
+  late double _deviceWidth;
   int currentPageIndex = 0;
 
   @override
   Widget build(BuildContext context) {
-    _deviceHeight = MediaQuery.of(context).size.height;
     _deviceWidth = MediaQuery.of(context).size.width;
 
     var searchText = '';
@@ -115,25 +113,23 @@ class _PlacesScreenState extends State<PlacesScreen> {
                   ],
                 ),
               ),
-              Expanded(
-                child: StaggeredGrid.count(
-                  crossAxisCount: 2,
-                  children: locations
-                      .mapIndexed(
-                        (i, e) => locationComponent(
-                          location: e,
-                          index: i,
-                          onPress: (p0) => {
-                            Navigator.pushNamed(
-                              context,
-                              PlaceDetailScreen.routeName,
-                              arguments: e,
-                            )
-                          },
-                        ),
-                      )
-                      .toList(),
-                ),
+              StaggeredGrid.count(
+                crossAxisCount: 2,
+                children: locations
+                    .mapIndexed(
+                      (i, e) => locationComponent(
+                        location: e,
+                        index: i,
+                        onPress: (p0) => {
+                          Navigator.pushNamed(
+                            context,
+                            PlaceDetailScreen.routeName,
+                            arguments: e,
+                          )
+                        },
+                      ),
+                    )
+                    .toList(),
               )
             ],
           ),

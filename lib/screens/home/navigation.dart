@@ -1,14 +1,15 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:futamap/util/consts.dart';
 // import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import '../../theme/colors.dart' as futa_map_colors;
-import '../../util/util.dart';
 import 'package:location/location.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 
 class NavigationScreen extends StatefulWidget {
   const NavigationScreen({super.key});
+  static const routeName = '/mapNavigationArguments';
 
   @override
   State<StatefulWidget> createState() => _NavigationScreenState();
@@ -19,15 +20,22 @@ class _NavigationScreenState extends State<NavigationScreen> {
   int currentPageIndex = 1;
 
   final Completer<GoogleMapController> _mapController = Completer();
-  String? _currentAddress;
-  // Position? _currentPosition;
+
+  StreamSubscription<LocationData>? _locationSubscription;
   LocationData? _locationData;
   Location location = Location();
+  LatLng? destination;
 
   @override
   void initState() {
     super.initState();
-    getLocation();
+    getLocation().then((_) => {
+          if (destination != null)
+            {
+              getPolyLinePoints(destination!)
+                  .then((value) => debugPrint('$value'))
+            }
+        });
   }
 
   var locations = {
@@ -69,18 +77,14 @@ class _NavigationScreenState extends State<NavigationScreen> {
     ),
   };
 
-  // late GoogleMapController mapController;
   final LatLng _center = const LatLng(7.292040, 5.151219);
-
-  // void _onMapCreated(GoogleMapController controller) {
-  //   mapController = controller;
-  // }
 
   @override
   Widget build(BuildContext context) {
     _deviceHeight = MediaQuery.of(context).size.height;
     _deviceWidth = MediaQuery.of(context).size.width;
-    final args = ModalRoute.of(context)!.settings.arguments as LatLng?;
+    destination = ModalRoute.of(context)!.settings.arguments as LatLng?;
+    debugPrint("Destination: $destination");
     return SizedBox(
       width: _deviceWidth,
       height: _deviceHeight,
@@ -129,17 +133,6 @@ class _NavigationScreenState extends State<NavigationScreen> {
     ));
   }
 
-  // Future<void> _getCurrentPosition() async {
-  //   final hasPermission = await handleLocationPermission(context);
-  //   if (!hasPermission) return;
-  //   await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
-  //       .then((Position position) {
-  //     setState(() => _currentPosition = position);
-  //   }).catchError((e) {
-  //     debugPrint(e);
-  //   });
-  // }
-
   Future<void> getLocation() async {
     bool serviceEnabled;
     PermissionStatus permissionGranted;
@@ -162,7 +155,8 @@ class _NavigationScreenState extends State<NavigationScreen> {
 
     _locationData = await location.getLocation();
     location.enableBackgroundMode(enable: true);
-    location.onLocationChanged.listen((LocationData currentLocation) {
+    _locationSubscription =
+        location.onLocationChanged.listen((LocationData currentLocation) {
       setState(() {
         _locationData = currentLocation;
         _cameraToPosition(
@@ -170,5 +164,32 @@ class _NavigationScreenState extends State<NavigationScreen> {
       });
     });
     return;
+  }
+
+  Future<List<LatLng>> getPolyLinePoints(LatLng destination) async {
+    final List<LatLng> polylineCoordinates = [];
+
+    PolylinePoints polylinePoints = PolylinePoints();
+    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+      GOOGLE_MAPS_API_KEY,
+      PointLatLng(_locationData?.latitude ?? _center.latitude,
+          _locationData?.longitude ?? _center.longitude),
+      PointLatLng(destination.latitude, destination.longitude),
+      travelMode: TravelMode.driving,
+    );
+    if (result.points.isNotEmpty) {
+      for (var point in result.points) {
+        polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+      }
+    } else {
+      debugPrint('$result.errorMessage');
+    }
+    return polylineCoordinates;
+  }
+
+  @override
+  void dispose() {
+    _locationSubscription?.cancel();
+    super.dispose();
   }
 }

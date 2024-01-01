@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 
 Future<bool> handleLocationPermission(BuildContext context) async {
-  Position position = await Geolocator.getCurrentPosition(
-      desiredAccuracy: LocationAccuracy.high);
+  // Position position = await Geolocator.getCurrentPosition(
+  //     desiredAccuracy: LocationAccuracy.high);
 
   bool serviceEnabled;
   LocationPermission permission;

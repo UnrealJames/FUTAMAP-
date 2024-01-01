@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:futamap/screens/auth/onboarding.dart';
+import 'package:futamap/screens/home/navigation.dart';
 import 'package:futamap/screens/home/place_detail.dart';
 
 void main() {
-  runApp(App(const OnboardingScreen()));
+  runApp(const App(OnboardingScreen()));
 }
 
 class App extends StatelessWidget {
-  Widget home;
-  App(this.home, {Key? key}) : super(key: key);
+  final Widget home;
+  const App(this.home, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +27,7 @@ class App extends StatelessWidget {
       home: home,
       routes: {
         PlaceDetailScreen.routeName: (context) => const PlaceDetailScreen(),
+        NavigationScreen.routeName: (context) => const NavigationScreen(),
       },
     );
   }

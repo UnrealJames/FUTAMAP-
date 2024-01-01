@@ -5,7 +5,6 @@ import 'package:futamap/components/buttons.dart';
 import 'package:futamap/screens/auth/login.dart';
 import 'package:futamap/screens/home/home.dart';
 import 'package:futamap/util/util.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:vector_graphics/vector_graphics.dart';
 import '../../theme/colors.dart' as futa_map_colors;
 

@@ -1,4 +1,3 @@
-import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:futamap/components/rating_bar.dart';
 import 'package:futamap/data/model/location.dart';
@@ -25,12 +24,10 @@ Widget locationComponent({
         children: [
           SizedBox(
             height: 150,
-            child: Expanded(
-              child: Container(
-                decoration: BoxDecoration(
-                  color: futa_map_colors.Colors.primary,
-                  borderRadius: BorderRadius.circular(16),
-                ),
+            child: Container(
+              decoration: BoxDecoration(
+                color: futa_map_colors.Colors.primary,
+                borderRadius: BorderRadius.circular(16),
               ),
             ),
           ),

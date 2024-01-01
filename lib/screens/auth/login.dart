@@ -1,7 +1,9 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:flutter/material.dart';
 import 'package:futamap/components/buttons.dart';
 import 'package:futamap/components/textfields.dart';
-import 'package:futamap/screens/auth/forgotPassword.dart';
+import 'package:futamap/screens/auth/forgot_password.dart';
 import 'package:futamap/screens/auth/signup.dart';
 import 'package:futamap/screens/home/home.dart';
 import '../../theme/colors.dart' as futa_map_colors;
