@@ -16,14 +16,11 @@ Widget defaultButton({
     height: 50,
     child: OutlinedButton(
       onPressed: onPressed,
-      style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all<Color>(
-          backgroundColor ?? futa_map_colors.Colors.onBackground,
-        ),
-        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-          RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(50),
-          ),
+      style: OutlinedButton.styleFrom(
+        backgroundColor: backgroundColor ?? futa_map_colors.Colors.onBackground,
+        side: const BorderSide(width: 0.01),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(50),
         ),
       ),
       child: Text(

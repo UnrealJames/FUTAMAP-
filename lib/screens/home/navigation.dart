@@ -26,14 +26,17 @@ class _NavigationScreenState extends State<NavigationScreen> {
   Location location = Location();
   LatLng? destination;
 
+  final Map<PolylineId, Polyline> _polyLines = {};
+
   @override
   void initState() {
     super.initState();
     getLocation().then((_) => {
           if (destination != null)
             {
-              getPolyLinePoints(destination!)
-                  .then((value) => debugPrint('$value'))
+              getPolyLinePoints(destination!).then(
+                (value) => generatePolyLineFromPoints(value),
+              )
             }
         });
   }
@@ -118,6 +121,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
                       : _center,
                 ),
               },
+              polylines: Set<Polyline>.of(_polyLines.values),
             ),
     );
   }
@@ -175,16 +179,29 @@ class _NavigationScreenState extends State<NavigationScreen> {
       PointLatLng(_locationData?.latitude ?? _center.latitude,
           _locationData?.longitude ?? _center.longitude),
       PointLatLng(destination.latitude, destination.longitude),
-      travelMode: TravelMode.driving,
+      travelMode: TravelMode.walking,
     );
     if (result.points.isNotEmpty) {
       for (var point in result.points) {
         polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+        debugPrint("Point: $point");
       }
     } else {
       debugPrint('$result.errorMessage');
     }
     return polylineCoordinates;
+  }
+
+  void generatePolyLineFromPoints(List<LatLng> polylines) async {
+    PolylineId id = const PolylineId('poly');
+    Polyline polyline = Polyline(
+      polylineId: id,
+      color: Colors.red,
+      points: polylines,
+      width: 8,
+    );
+
+    setState(() => _polyLines[id] = polyline);
   }
 
   @override
