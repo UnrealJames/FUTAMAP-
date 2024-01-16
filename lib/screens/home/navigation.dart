@@ -92,12 +92,16 @@ class _NavigationScreenState extends State<NavigationScreen> {
       width: _deviceWidth,
       height: _deviceHeight,
       child: _locationData == null
-          ? const Center(
-              child: Text(
-                "Loading...",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
+          ? Container(
+              color: Colors.white,
+              child: const Center(
+                child: Text(
+                  "Loading...",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black,
+                  ),
                 ),
               ),
             )
@@ -163,8 +167,10 @@ class _NavigationScreenState extends State<NavigationScreen> {
         location.onLocationChanged.listen((LocationData currentLocation) {
       setState(() {
         _locationData = currentLocation;
-        _cameraToPosition(
-            LatLng(currentLocation.latitude!, currentLocation.longitude!));
+        if (destination != null) {
+          _cameraToPosition(
+              LatLng(currentLocation.latitude!, currentLocation.longitude!));
+        }
       });
     });
     return;
