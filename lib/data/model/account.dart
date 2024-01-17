@@ -1,22 +1,22 @@
-class User {
+class Account {
   String name;
   String uid;
-  String photoUrl;
+  String? photoUrl;
   String email;
 
-  User(
+  Account(
     this.name,
     this.uid,
+    this.email, {
     this.photoUrl,
-    this.email,
-  );
+  });
 
-  factory User.fromMap(Map map) {
-    User item = User(
+  factory Account.fromMap(Map map) {
+    Account item = Account(
       map['name'],
       map['uid'],
-      map['photoUrl'],
       map['email'],
+      photoUrl: map['photoUrl'],
     );
     return item;
   }

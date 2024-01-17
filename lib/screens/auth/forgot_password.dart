@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:futamap/components/buttons.dart';
-import 'package:futamap/components/textfields.dart';
+import 'package:futamap/components/text_field.dart';
 import '../../theme/colors.dart' as futa_map_colors;
 
 class ForgotPasswordScreen extends StatefulWidget {
@@ -64,8 +64,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     color: futa_map_colors.Colors.onSurface),
               ),
               const SizedBox(height: 8),
-              textField(
-                width: _deviceWidth,
+              InputField(
+                _deviceWidth,
                 backgroundColor: futa_map_colors.Colors.primaryContainer,
                 hintText: 'eg name@example.com',
                 onChanged: (p0) => setState(() {

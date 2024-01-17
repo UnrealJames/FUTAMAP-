@@ -6,6 +6,7 @@ import 'package:futamap/util/consts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
+import '../../theme/colors.dart' as futa_map_colors;
 
 class NavigationScreen extends StatefulWidget {
   const NavigationScreen({super.key});
@@ -88,13 +89,13 @@ class _NavigationScreenState extends State<NavigationScreen> {
     _deviceWidth = MediaQuery.of(context).size.width;
     destination = ModalRoute.of(context)!.settings.arguments as LatLng?;
     debugPrint("Destination: $destination");
-    return SizedBox(
-      width: _deviceWidth,
-      height: _deviceHeight,
-      child: _locationData == null
-          ? Container(
-              color: Colors.white,
-              child: const Center(
+    return Scaffold(
+      backgroundColor: futa_map_colors.Colors.surface,
+      body: SizedBox(
+        width: _deviceWidth,
+        height: _deviceHeight,
+        child: _locationData == null
+            ? const Center(
                 child: Text(
                   "Loading...",
                   style: TextStyle(
@@ -103,30 +104,30 @@ class _NavigationScreenState extends State<NavigationScreen> {
                     color: Colors.black,
                   ),
                 ),
-              ),
-            )
-          : GoogleMap(
-              onMapCreated: ((controller) =>
-                  _mapController.complete(controller)),
-              initialCameraPosition: CameraPosition(
-                target: _locationData != null
-                    ? LatLng(
-                        _locationData!.latitude!, _locationData!.longitude!)
-                    : _center,
-                zoom: 15.0,
-              ),
-              markers: {
-                ...locations,
-                Marker(
-                  markerId: const MarkerId('Current Location'),
-                  position: _locationData != null
+              )
+            : GoogleMap(
+                onMapCreated: ((controller) =>
+                    _mapController.complete(controller)),
+                initialCameraPosition: CameraPosition(
+                  target: _locationData != null
                       ? LatLng(
                           _locationData!.latitude!, _locationData!.longitude!)
                       : _center,
+                  zoom: 15.0,
                 ),
-              },
-              polylines: Set<Polyline>.of(_polyLines.values),
-            ),
+                markers: {
+                  ...locations,
+                  Marker(
+                    markerId: const MarkerId('Current Location'),
+                    position: _locationData != null
+                        ? LatLng(
+                            _locationData!.latitude!, _locationData!.longitude!)
+                        : _center,
+                  ),
+                },
+                polylines: Set<Polyline>.of(_polyLines.values),
+              ),
+      ),
     );
   }
 

@@ -1,11 +1,14 @@
 // ignore_for_file: unused_local_variable
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:futamap/components/buttons.dart';
-import 'package:futamap/components/textfields.dart';
+import 'package:futamap/components/loader.dart';
+import 'package:futamap/components/text_field.dart';
 import 'package:futamap/screens/auth/forgot_password.dart';
 import 'package:futamap/screens/auth/signup.dart';
 import 'package:futamap/screens/home/home.dart';
+import 'package:futamap/service/firebase_service.dart';
 import '../../theme/colors.dart' as futa_map_colors;
 
 class LoginScreen extends StatefulWidget {
@@ -18,6 +21,20 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   late double _deviceHeight, _deviceWidth;
   var showPassword = false;
+  var _isLoading = false;
+
+  final _auth = FirebaseAuthService();
+
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     _deviceHeight = MediaQuery.of(context).size.height;
@@ -29,180 +46,203 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       backgroundColor: futa_map_colors.Colors.surface,
       body: SafeArea(
-        child: Container(
-            width: _deviceWidth,
-            padding: EdgeInsets.only(
-              top: _deviceHeight * .025,
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  width: _deviceWidth,
-                  padding: EdgeInsets.only(
-                    top: 12,
-                    bottom: _deviceHeight * .025,
-                    left: _deviceWidth * .05,
-                    right: _deviceWidth * .05,
-                  ),
-                  child: ListView(
-                    shrinkWrap: true,
-                    children: [
-                      const Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          "Login",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 22,
-                            color: futa_map_colors.Colors.onSurface,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 12),
-                      const Text(
-                        "Welcome back, provide your login details to login to your account",
-                        style: TextStyle(
-                          color: futa_map_colors.Colors.onSurface,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                      const SizedBox(height: 24),
-                      const Text(
-                        "Email Address",
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: futa_map_colors.Colors.onSurface),
-                      ),
-                      const SizedBox(height: 8),
-                      textField(
-                        width: _deviceWidth,
-                        backgroundColor:
-                            futa_map_colors.Colors.primaryContainer,
-                        hintText: 'eg name@example.com',
-                        onChanged: (p0) => setState(() {
-                          email = p0;
-                        }),
-                      ),
-                      const SizedBox(height: 24),
-                      const Text(
-                        "Password",
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: futa_map_colors.Colors.onSurface),
-                      ),
-                      const SizedBox(height: 8),
-                      passwordTextField(
-                        showPassword: showPassword,
-                        width: _deviceWidth,
-                        backgroundColor:
-                            futa_map_colors.Colors.primaryContainer,
-                        hintText: '**********',
-                        onChanged: (p0) => setState(() {
-                          password = p0;
-                        }),
-                        onPressed: () {
-                          setState(() {
-                            showPassword = !showPassword;
-                          });
-                        },
-                      ),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: TextButton(
-                          onPressed: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  const ForgotPasswordScreen(),
-                            ),
-                          ),
-                          child: const Text(
-                            "Forgot Password?",
-                            style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: futa_map_colors.Colors.primary),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 24),
-                      defaultButton(
-                        width: _deviceWidth * .05,
-                        onPressed: () => {
-                          Navigator.of(context).pushAndRemoveUntil(
-                            MaterialPageRoute(
-                              builder: (context) => const HomeScreen(),
-                            ),
-                            (Route<dynamic> route) => false,
-                          )
-                        },
-                        text: "Login",
-                        backgroundColor: futa_map_colors.Colors.primary,
-                        textColor: futa_map_colors.Colors.onPrimary,
-                      ),
-                      const SizedBox(height: 16),
-                      const Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          "OR",
-                          style: TextStyle(
-                            color: futa_map_colors.Colors.onSurface,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 14,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      googleButton(width: _deviceWidth * .05, signin: true),
-                      const SizedBox(height: 16),
-                      appleButton(width: _deviceWidth * .05, signin: true),
-                    ],
-                  ),
+        child: _isLoading
+            ? const Center(child: Loader())
+            : Container(
+                width: _deviceWidth,
+                padding: EdgeInsets.only(
+                  top: _deviceHeight * .025,
                 ),
-                Column(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      height: 1,
                       width: _deviceWidth,
-                      color: futa_map_colors.Colors.onSurface.withOpacity(.1),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text(
-                          "New to FUTA-MAP?",
-                          style: TextStyle(
-                            color: futa_map_colors.Colors.onSurface,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 16,
-                          ),
-                        ),
-                        TextButton(
-                          onPressed: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const SignupScreen(),
+                      padding: EdgeInsets.only(
+                        top: 12,
+                        bottom: _deviceHeight * .025,
+                        left: _deviceWidth * .05,
+                        right: _deviceWidth * .05,
+                      ),
+                      child: ListView(
+                        shrinkWrap: true,
+                        children: [
+                          const Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                              "Login",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 22,
+                                color: futa_map_colors.Colors.onSurface,
+                              ),
                             ),
                           ),
-                          child: const Text(
-                            "Sign up.",
+                          const SizedBox(height: 12),
+                          const Text(
+                            "Welcome back, provide your login details to login to your account",
                             style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: futa_map_colors.Colors.primary),
+                              color: futa_map_colors.Colors.onSurface,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                            ),
                           ),
+                          const SizedBox(height: 24),
+                          const Text(
+                            "Email Address",
+                            style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: futa_map_colors.Colors.onSurface),
+                          ),
+                          const SizedBox(height: 8),
+                          InputField(
+                            _deviceWidth,
+                            controller: _emailController,
+                            backgroundColor:
+                                futa_map_colors.Colors.primaryContainer,
+                            hintText: 'eg name@example.com',
+                            onChanged: (p0) => setState(() {
+                              email = p0;
+                            }),
+                          ),
+                          const SizedBox(height: 24),
+                          const Text(
+                            "Password",
+                            style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: futa_map_colors.Colors.onSurface),
+                          ),
+                          const SizedBox(height: 8),
+                          InputField(
+                            _deviceWidth,
+                            controller: _passwordController,
+                            isPassword: true,
+                            showPassword: showPassword,
+                            backgroundColor:
+                                futa_map_colors.Colors.primaryContainer,
+                            hintText: '**********',
+                            onChanged: (p0) => setState(() {
+                              password = p0;
+                            }),
+                            onPressed: () {
+                              setState(() {
+                                showPassword = !showPassword;
+                              });
+                            },
+                          ),
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: TextButton(
+                              onPressed: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      const ForgotPasswordScreen(),
+                                ),
+                              ),
+                              child: const Text(
+                                "Forgot Password?",
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: futa_map_colors.Colors.primary),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 24),
+                          defaultButton(
+                            width: _deviceWidth * .05,
+                            onPressed: () => {signIn()},
+                            text: "Login",
+                            backgroundColor: futa_map_colors.Colors.primary,
+                            textColor: futa_map_colors.Colors.onPrimary,
+                          ),
+                          const SizedBox(height: 16),
+                          const Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                              "OR",
+                              style: TextStyle(
+                                color: futa_map_colors.Colors.onSurface,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 14,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 16),
+                          googleButton(width: _deviceWidth * .05, signin: true),
+                          const SizedBox(height: 16),
+                          appleButton(width: _deviceWidth * .05, signin: true),
+                        ],
+                      ),
+                    ),
+                    Column(
+                      children: [
+                        Container(
+                          height: 1,
+                          width: _deviceWidth,
+                          color:
+                              futa_map_colors.Colors.onSurface.withOpacity(.1),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text(
+                              "New to FUTA-MAP?",
+                              style: TextStyle(
+                                color: futa_map_colors.Colors.onSurface,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 16,
+                              ),
+                            ),
+                            TextButton(
+                              onPressed: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const SignupScreen(),
+                                ),
+                              ),
+                              child: const Text(
+                                "Sign up.",
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: futa_map_colors.Colors.primary),
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
                   ],
-                ),
-              ],
-            )),
+                )),
       ),
     );
+  }
+
+  Future<void> signIn() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    String email = _emailController.text;
+    String password = _passwordController.text;
+
+    User? user = await _auth.signin(email, password);
+
+    setState(() {
+      _isLoading = false;
+    });
+
+    if (user != null) {
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(
+          builder: (context) => const HomeScreen(),
+        ),
+        (Route<dynamic> route) => false,
+      );
+    }
   }
 }
