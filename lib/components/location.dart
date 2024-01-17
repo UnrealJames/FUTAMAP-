@@ -25,10 +25,17 @@ Widget locationComponent({
           SizedBox(
             height: 150,
             child: Container(
+              clipBehavior: Clip.hardEdge,
               decoration: BoxDecoration(
                 color: futa_map_colors.Colors.primary,
                 borderRadius: BorderRadius.circular(16),
               ),
+              child: location.images?.first.toString().isNotEmpty ?? false
+                  ? Image.network(
+                      location.images?.first.toString() ?? "",
+                      fit: BoxFit.cover,
+                    )
+                  : const SizedBox(),
             ),
           ),
           Container(
@@ -57,7 +64,9 @@ Widget locationComponent({
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 StarRating(
-                    rating: location.rating, onRatingChanged: (p0) => {}),
+                  rating: (double.parse(location.rating ?? "0.0")) / 1.0,
+                  onRatingChanged: (p0) => {},
+                ),
                 Text(
                   location.rating.toString(),
                   style: const TextStyle(

@@ -1,13 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class Location {
   String name;
   String id;
   String description;
-  List<String> images;
-  double rating;
-  LatLng latLng;
-  bool isFavorite = false;
+  List<dynamic>? images;
+  String? rating;
+  GeoPoint? latlng;
+  bool? isFavorite = false;
 
   Location(
     this.name,
@@ -15,11 +16,13 @@ class Location {
     this.description,
     this.images,
     this.rating,
-    this.latLng, {
+    this.latlng, {
     this.isFavorite = false,
   });
 
-  factory Location.fromMap(Map map) {
+  factory Location.fromMap(
+      DocumentSnapshot<Map<String, dynamic>> documentSnapshot) {
+    final map = documentSnapshot.data()!;
     Location item = Location(
       map['name'],
       map['id'],
@@ -39,7 +42,7 @@ class Location {
       'description': description,
       'images': images,
       'rating': rating,
-      'latlng': latLng,
+      'latlng': latlng,
       'isFavorite': isFavorite
     };
   }

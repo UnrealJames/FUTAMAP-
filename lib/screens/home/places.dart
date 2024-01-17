@@ -1,6 +1,8 @@
 // ignore_for_file: unused_local_variable
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:futamap/components/empty.dart';
 import 'package:futamap/components/location.dart';
 import 'package:futamap/data/model/location.dart';
 import 'package:futamap/screens/home/place_detail.dart';
@@ -18,123 +20,115 @@ class PlacesScreen extends StatefulWidget {
 
 class _PlacesScreenState extends State<PlacesScreen> {
   late double _deviceWidth;
-  int currentPageIndex = 0;
+
+  final _db = FirebaseFirestore.instance;
+  final List<Location> _locations = [];
+
+  @override
+  void initState() {
+    super.initState();
+    getLocations();
+  }
 
   @override
   Widget build(BuildContext context) {
     _deviceWidth = MediaQuery.of(context).size.width;
-
-    var searchText = '';
-    final locations = [
-      Location(
-        "FUTA Library",
-        "",
-        "Lorem ipsum dolor sit amet consectetur. Arcu tellus adipiscing rutrum sed eros venenatis et at. Sed fermentum ullamcorper urna habitant egestas. Netus turpis eu in parturient bibendum eget vitae. Tincidunt integer gravida dolor amet sed tellus amet ornare viverra. Nisl volutpat at a rhoncus urna et sed diam porta. Id pellentesque faucibus morbi.",
-        ["assets/svgs/library.svg.vec", "assets/images/library.jpg", "", ""],
-        4.5,
-        const LatLng(7.305990571050196, 5.1397887288105),
-        isFavorite: true,
-      ),
-      Location(
-        "FUTA Library",
-        "",
-        "Lorem ipsum dolor sit amet consectetur. Arcu tellus adipiscing rutrum sed eros venenatis et at. Sed fermentum ullamcorper urna habitant egestas. Netus turpis eu in parturient bibendum eget vitae. Tincidunt integer gravida dolor amet sed tellus amet ornare viverra. Nisl volutpat at a rhoncus urna et sed diam porta. Id pellentesque faucibus morbi.",
-        ["assets/svgs/library.svg.vec", "assets/images/library.jpg"],
-        3.2,
-        const LatLng(7.305990571050196, 5.1397887288105),
-      ),
-      Location(
-        "FUTA Library",
-        "",
-        "Lorem ipsum dolor sit amet consectetur. Arcu tellus adipiscing rutrum sed eros venenatis et at. Sed fermentum ullamcorper urna habitant egestas. Netus turpis eu in parturient bibendum eget vitae. Tincidunt integer gravida dolor amet sed tellus amet ornare viverra. Nisl volutpat at a rhoncus urna et sed diam porta. Id pellentesque faucibus morbi.",
-        ["assets/svgs/library.svg.vec", "assets/images/library.jpg"],
-        4.0,
-        const LatLng(7.305990571050196, 5.1397887288105),
-      ),
-      Location(
-        "FUTA Library",
-        "",
-        "Lorem ipsum dolor sit amet consectetur. Arcu tellus adipiscing rutrum sed eros venenatis et at. Sed fermentum ullamcorper urna habitant egestas. Netus turpis eu in parturient bibendum eget vitae. Tincidunt integer gravida dolor amet sed tellus amet ornare viverra. Nisl volutpat at a rhoncus urna et sed diam porta. Id pellentesque faucibus morbi.",
-        ["assets/svgs/library.svg.vec", "assets/images/library.jpg"],
-        4.1,
-        const LatLng(7.305990571050196, 5.1397887288105),
-      ),
-    ];
 
     return Scaffold(
       backgroundColor: futa_map_colors.Colors.surface,
       body: SafeArea(
         child: SizedBox(
           width: _deviceWidth,
-          child: Column(
-            children: [
-              Container(
-                margin: const EdgeInsets.all(16),
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                decoration: BoxDecoration(
-                  border: Border.all(color: futa_map_colors.Colors.primary),
-                  borderRadius: BorderRadius.circular(50),
-                ),
-                child: Row(
+          child: (_locations.isEmpty)
+              ? const Empty("No locations found",
+                  "We couldn't find any locations. Please try again later.")
+              : Column(
                   children: [
-                    const Icon(
-                      Icons.location_on,
-                      color: futa_map_colors.Colors.primary,
-                      size: 30,
-                    ),
-                    SizedBox(
-                      width: _deviceWidth * .7,
-                      child: TextFormField(
-                        onChanged: (p0) => setState(() => searchText = p0),
-                        cursorColor: const Color(0xFF3734A9),
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 14,
-                        ),
-                        decoration: const InputDecoration(
-                          fillColor: Color(0xFFF9FAFB),
-                          filled: true,
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              width: 1,
-                              color: Colors.transparent,
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              width: 1,
-                              color: Colors.transparent,
-                            ),
-                          ),
-                          hintText: "Search here",
-                        ),
+                    Container(
+                      margin: const EdgeInsets.all(16),
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      decoration: BoxDecoration(
+                        border:
+                            Border.all(color: futa_map_colors.Colors.primary),
+                        borderRadius: BorderRadius.circular(50),
                       ),
+                      child: Row(
+                        children: [
+                          const Icon(
+                            Icons.location_on,
+                            color: futa_map_colors.Colors.primary,
+                            size: 30,
+                          ),
+                          SizedBox(
+                            width: _deviceWidth * .7,
+                            child: TextFormField(
+                              cursorColor: const Color(0xFF3734A9),
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 14,
+                              ),
+                              decoration: const InputDecoration(
+                                fillColor: Color(0xFFF9FAFB),
+                                filled: true,
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    width: 1,
+                                    color: Colors.transparent,
+                                  ),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    width: 1,
+                                    color: Colors.transparent,
+                                  ),
+                                ),
+                                hintText: "Search here",
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: ListView(children: [
+                        StaggeredGrid.count(
+                          crossAxisCount: 2,
+                          children: _locations
+                              .mapIndexed(
+                                (i, e) => locationComponent(
+                                  location: e,
+                                  index: i,
+                                  onPress: (p0) => {
+                                    Navigator.pushNamed(
+                                      context,
+                                      PlaceDetailScreen.routeName,
+                                      arguments: e,
+                                    )
+                                  },
+                                ),
+                              )
+                              .toList(),
+                        ),
+                      ]),
                     )
                   ],
                 ),
-              ),
-              StaggeredGrid.count(
-                crossAxisCount: 2,
-                children: locations
-                    .mapIndexed(
-                      (i, e) => locationComponent(
-                        location: e,
-                        index: i,
-                        onPress: (p0) => {
-                          Navigator.pushNamed(
-                            context,
-                            PlaceDetailScreen.routeName,
-                            arguments: e,
-                          )
-                        },
-                      ),
-                    )
-                    .toList(),
-              )
-            ],
-          ),
         ),
       ),
     );
+  }
+
+  Future<void> getLocations() async {
+    debugPrint("GetLocations called");
+    List<Location> locations = [];
+    await _db.collection('places').get().then(
+          (value) => {
+            for (int i = 0; i < value.docs.length; i++)
+              locations.add(Location.fromMap(value.docs[i]))
+          },
+        );
+    setState(() {
+      _locations.addAll(locations);
+    });
   }
 }

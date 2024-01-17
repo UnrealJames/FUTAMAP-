@@ -42,24 +42,31 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
             width: _deviceWidth,
             height: _deviceHeight * .45,
             child: Container(
-              color: Colors.blue,
-            ),
+                color: Colors.blue,
+                child: args.images?.first.toString().isNotEmpty ?? false
+                    ? Image.network(
+                        args.images?.first.toString() ?? "",
+                        fit: BoxFit.fill,
+                      )
+                    : const SizedBox()),
           ),
           Container(
             margin: const EdgeInsets.all(16),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  args.name,
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
+                Expanded(
+                  child: Text(
+                    args.name,
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
                   ),
                 ),
                 Icon(
-                  args.isFavorite
+                  args.isFavorite ?? false
                       ? Icons.bookmark
                       : Icons.bookmark_border_outlined,
                   size: 30,
@@ -97,7 +104,7 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
                     Container(
                       margin: const EdgeInsets.only(left: 8),
                       child: StarRating(
-                        rating: args.rating,
+                        rating: (double.parse(args.rating ?? "0.0")) / 1.0,
                         onRatingChanged: (p0) => {},
                       ),
                     ),
@@ -110,7 +117,7 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
                     Navigator.pushNamed(
                       context,
                       NavigationScreen.routeName,
-                      arguments: args.latLng,
+                      arguments: args.latlng,
                     )
                   },
                 ),
@@ -124,18 +131,23 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
               crossAxisSpacing: 12,
               crossAxisCount: 3,
               children: args.images
-                  .mapIndexed(
-                    (i, e) => SizedBox(
-                      height: 140,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: futa_map_colors.Colors.primary,
-                          borderRadius: BorderRadius.circular(16),
+                      ?.mapIndexed(
+                        (i, e) => SizedBox(
+                          height: 140,
+                          child: Container(
+                            clipBehavior: Clip.hardEdge,
+                            decoration: BoxDecoration(
+                              color: futa_map_colors.Colors.primary,
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            child: (e.toString().isNotEmpty)
+                                ? Image.network(e.toString(), fit: BoxFit.cover)
+                                : const SizedBox(),
+                          ),
                         ),
-                      ),
-                    ),
-                  )
-                  .toList(),
+                      )
+                      .toList() ??
+                  [],
             ),
           ),
           Column(
