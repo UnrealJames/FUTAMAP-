@@ -1,13 +1,12 @@
 import 'dart:async';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:futamap/util/consts.dart';
-// import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import '../../theme/colors.dart' as futa_map_colors;
+import '../../data/model/location.dart' as futa_map_location;
 
 class NavigationScreen extends StatefulWidget {
   const NavigationScreen({super.key});
@@ -19,7 +18,9 @@ class NavigationScreen extends StatefulWidget {
 
 class _NavigationScreenState extends State<NavigationScreen> {
   late double _deviceHeight, _deviceWidth;
-  int currentPageIndex = 1;
+
+  final _db = FirebaseFirestore.instance;
+  final List<Marker> _locations = [];
 
   final Completer<GoogleMapController> _mapController = Completer();
 
@@ -33,6 +34,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
   @override
   void initState() {
     super.initState();
+    getLocations();
     getLocation().then((_) => {
           if (destination != null)
             {
@@ -44,45 +46,6 @@ class _NavigationScreenState extends State<NavigationScreen> {
             }
         });
   }
-
-  var locations = {
-    const Marker(
-      markerId: MarkerId('SET Building'),
-      position: LatLng(7.305118052707932, 5.135239469531077),
-    ),
-    const Marker(
-      markerId: MarkerId('SEET Building'),
-      position: LatLng(7.308119104394952, 5.132149552909689),
-    ),
-    const Marker(
-      markerId: MarkerId('SAAT Building'),
-      position: LatLng(7.305990571050196, 5.1397887288105),
-    ),
-    const Marker(
-      markerId: MarkerId('Multipurpose Hall'),
-      position: LatLng(7.30253389777358, 5.135620700789852),
-    ),
-    const Marker(
-      markerId: MarkerId('SLS Building'),
-      position: LatLng(7.301373405807791, 5.134965498297722),
-    ),
-    const Marker(
-      markerId: MarkerId('GNS Building'),
-      position: LatLng(7.305990571050196, 5.1397887288105),
-    ),
-    const Marker(
-      markerId: MarkerId('New 1000 Capacity Lecture Theatre'),
-      position: LatLng(7.301852322590822, 5.135322185901965),
-    ),
-    const Marker(
-      markerId: MarkerId('Senate Building'),
-      position: LatLng(7.303274061822791, 5.135747043867175),
-    ),
-    const Marker(
-      markerId: MarkerId('SPS Building'),
-      position: LatLng(7.305990571050196, 5.1397887288105),
-    ),
-  };
 
   final LatLng _center = const LatLng(7.292040, 5.151219);
 
@@ -119,7 +82,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
                   zoom: 15.0,
                 ),
                 markers: {
-                  ...locations,
+                  ..._locations,
                   Marker(
                     markerId: const MarkerId('Current Location'),
                     position: _locationData != null
@@ -218,5 +181,24 @@ class _NavigationScreenState extends State<NavigationScreen> {
   void dispose() {
     _locationSubscription?.cancel();
     super.dispose();
+  }
+
+  Future<void> getLocations() async {
+    debugPrint("GetLocations called");
+    List<futa_map_location.Location> locations = [];
+    await _db.collection('places').get().then(
+          (value) => {
+            for (int i = 0; i < value.docs.length; i++)
+              locations.add(futa_map_location.Location.fromMap(value.docs[i]))
+          },
+        );
+    setState(() {
+      _locations.addAll(locations.map(
+        (e) => Marker(
+          markerId: MarkerId(e.name),
+          position: LatLng(e.latlng!.latitude, e.latlng!.longitude),
+        ),
+      ));
+    });
   }
 }
