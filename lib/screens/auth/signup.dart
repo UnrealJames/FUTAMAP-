@@ -167,9 +167,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           const SizedBox(height: 24),
                           defaultButton(
                             width: _deviceWidth * .05,
-                            onPressed: () {
-                              signup();
-                            },
+                            onPressed: () => signup(),
                             text: "Create Account",
                             backgroundColor: futa_map_colors.Colors.primary,
                             textColor: futa_map_colors.Colors.onPrimary,

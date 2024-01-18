@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:futamap/firebase_options.dart';
+import 'package:futamap/firbase_options.dart';
 import 'package:futamap/screens/auth/onboarding.dart';
 import 'package:futamap/screens/home/home.dart';
 import 'package:futamap/screens/home/navigation.dart';

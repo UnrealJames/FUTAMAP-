@@ -192,13 +192,13 @@ class _NavigationScreenState extends State<NavigationScreen> {
               locations.add(futa_map_location.Location.fromMap(value.docs[i]))
           },
         );
-    setState(() {
-      _locations.addAll(locations.map(
-        (e) => Marker(
-          markerId: MarkerId(e.name),
-          position: LatLng(e.latlng!.latitude, e.latlng!.longitude),
-        ),
-      ));
-    });
+    // setState(() {
+    //   _locations.addAll(locations.map(
+    //     (e) => Marker(
+    //       markerId: MarkerId(e.name),
+    //       position: LatLng(e.latlng!.latitude, e.latlng!.longitude),
+    //     ),
+    //   ));
+    // });
   }
 }
