@@ -23,6 +23,7 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
     _deviceHeight = MediaQuery.of(context).size.height;
     _deviceWidth = MediaQuery.of(context).size.width;
     final args = ModalRoute.of(context)!.settings.arguments as Location;
+    debugPrint("Args $args");
     return Scaffold(
       backgroundColor: futa_map_colors.Colors.background,
       appBar: AppBar(
@@ -114,6 +115,7 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
                   width: _deviceWidth * .25,
                   text: "Visit",
                   onPressed: () => {
+                    // var latLng = LatLng(args.latlng.latitude, args.latlng.longitude),
                     Navigator.pushNamed(
                       context,
                       NavigationScreen.routeName,

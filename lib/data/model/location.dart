@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class Location {
   String name;
@@ -29,7 +28,7 @@ class Location {
       map['description'],
       map['images'],
       map['rating'],
-      map['latLng'],
+      map['latlng'],
       isFavorite: map['isFavorite'],
     );
     return item;
@@ -46,4 +45,8 @@ class Location {
       'isFavorite': isFavorite
     };
   }
+
+  @override
+  String toString() =>
+      'Location(name: $name, id: $id, description: $description, images: $images, rating: $rating, latlng: $latlng, isFavorite: $isFavorite)';
 }

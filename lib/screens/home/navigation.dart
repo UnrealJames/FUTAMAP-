@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:futamap/util/consts.dart';
 // import 'package:geolocator/geolocator.dart';
@@ -25,7 +26,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
   StreamSubscription<LocationData>? _locationSubscription;
   LocationData? _locationData;
   Location location = Location();
-  LatLng? destination;
+  GeoPoint? destination;
 
   final Map<PolylineId, Polyline> _polyLines = {};
 
@@ -35,7 +36,9 @@ class _NavigationScreenState extends State<NavigationScreen> {
     getLocation().then((_) => {
           if (destination != null)
             {
-              getPolyLinePoints(destination!).then(
+              getPolyLinePoints(
+                      LatLng(destination!.latitude, destination!.longitude))
+                  .then(
                 (value) => generatePolyLineFromPoints(value),
               )
             }
@@ -87,7 +90,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
   Widget build(BuildContext context) {
     _deviceHeight = MediaQuery.of(context).size.height;
     _deviceWidth = MediaQuery.of(context).size.width;
-    destination = ModalRoute.of(context)!.settings.arguments as LatLng?;
+    destination = ModalRoute.of(context)!.settings.arguments as GeoPoint?;
     debugPrint("Destination: $destination");
     return Scaffold(
       backgroundColor: futa_map_colors.Colors.surface,
