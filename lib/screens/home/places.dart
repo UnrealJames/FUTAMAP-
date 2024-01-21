@@ -23,6 +23,8 @@ class _PlacesScreenState extends State<PlacesScreen> {
 
   final _db = FirebaseFirestore.instance;
   final List<Location> _locations = [];
+  final List<Location> _filteredLocations = [];
+  final _searchController = TextEditingController();
 
   @override
   void initState() {
@@ -62,6 +64,7 @@ class _PlacesScreenState extends State<PlacesScreen> {
                           SizedBox(
                             width: _deviceWidth * .7,
                             child: TextFormField(
+                              controller: _searchController,
                               cursorColor: const Color(0xFF3734A9),
                               style: const TextStyle(
                                 fontWeight: FontWeight.w500,
@@ -84,6 +87,20 @@ class _PlacesScreenState extends State<PlacesScreen> {
                                 ),
                                 hintText: "Search here",
                               ),
+                              onChanged: (value) => {
+                                setState(
+                                  () => {
+                                    _filteredLocations.clear(),
+                                    _filteredLocations.addAll(
+                                      _locations
+                                          .where((element) => element.name
+                                              .toLowerCase()
+                                              .contains(value.toLowerCase()))
+                                          .toList(),
+                                    )
+                                  },
+                                )
+                              },
                             ),
                           )
                         ],
@@ -93,7 +110,7 @@ class _PlacesScreenState extends State<PlacesScreen> {
                       child: ListView(children: [
                         StaggeredGrid.count(
                           crossAxisCount: 2,
-                          children: _locations
+                          children: _filteredLocations
                               .mapIndexed(
                                 (i, e) => locationComponent(
                                   location: e,
@@ -129,6 +146,9 @@ class _PlacesScreenState extends State<PlacesScreen> {
         );
     setState(() {
       _locations.addAll(locations);
+      if (_searchController.text.isEmpty) {
+        _filteredLocations.addAll(locations);
+      }
     });
   }
 }

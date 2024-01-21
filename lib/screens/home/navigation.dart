@@ -90,6 +90,12 @@ class _NavigationScreenState extends State<NavigationScreen> {
                             _locationData!.latitude!, _locationData!.longitude!)
                         : _center,
                   ),
+                  if (destination != null)
+                    Marker(
+                      markerId: const MarkerId('Destination'),
+                      position:
+                          LatLng(destination!.latitude, destination!.longitude),
+                    ),
                 },
                 polylines: Set<Polyline>.of(_polyLines.values),
               ),
@@ -134,10 +140,10 @@ class _NavigationScreenState extends State<NavigationScreen> {
         location.onLocationChanged.listen((LocationData currentLocation) {
       setState(() {
         _locationData = currentLocation;
-        if (destination != null) {
-          _cameraToPosition(
-              LatLng(currentLocation.latitude!, currentLocation.longitude!));
-        }
+        // if (destination != null) {
+        //   _cameraToPosition(
+        //       LatLng(currentLocation.latitude!, currentLocation.longitude!));
+        // }
       });
     });
     return;
