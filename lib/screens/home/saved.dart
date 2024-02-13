@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:futamap/components/empty.dart';
+import 'package:futamap/data/model/account.dart';
 import 'package:futamap/screens/auth/login.dart';
 import 'package:futamap/screens/home/place_detail.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -23,8 +25,21 @@ class _SavedScreenState extends State<SavedScreen> {
   late double _deviceWidth;
 
   final user = FirebaseAuth.instance.currentUser;
+  final _db = FirebaseFirestore.instance;
   final TextEditingController _searchController = TextEditingController();
   final List<Location> _locations = [];
+  final List<Location> _filteredLocations = [];
+
+  Account? account;
+
+  @override
+  void initState() {
+    super.initState();
+    if (user != null) {
+      _getUserInfo(user!).then((value) => {setState(() => account = value)});
+      _getLocations();
+    }
+  }
 
   @override
   void dispose() {
@@ -172,5 +187,40 @@ class _SavedScreenState extends State<SavedScreen> {
         ),
       ),
     );
+  }
+
+  Future<Account?> _getUserInfo(User user) async {
+    debugPrint("${user.uid}");
+    Account? account;
+    try {
+      await _db.collection("users").doc(user.uid).get().then(
+            (value) => {account = Account.fromFirestore(value, null)},
+          );
+      // setState(() => _isLoading = false);
+      return account;
+    } catch (e) {
+      // setState(() => _isLoading = false);
+      debugPrint('$e');
+      return null;
+    }
+  }
+
+  Future<void> _getLocations() async {
+    debugPrint("GetLocations called");
+    List<Location> locations = [];
+    await _db.collection('places').get().then(
+          (value) => {
+            for (int i = 0; i < value.docs.length; i++)
+              locations.add(Location.fromMap(value.docs[i]))
+          },
+        );
+    setState(() {
+      _locations.addAll(locations.where(
+          (element) => account?.bookmarks?.contains(element.id) ?? false));
+      // _locations.addAll(locations);
+      if (_searchController.text.isEmpty) {
+        _filteredLocations.addAll(_locations);
+      }
+    });
   }
 }

@@ -34,6 +34,22 @@ class Location {
     return item;
   }
 
+  // factory Location.fromFirestore(
+  //   DocumentSnapshot<Map<String, dynamic>> snapshot,
+  //   SnapshotOptions? options,
+  // ) {
+  //   final data = snapshot.data();
+  //   Location item = Location(
+  //     data?['name'],
+  //     data?['uid'],
+  //     data?['email'],
+  //     photoUrl: data?['photoUrl'],
+  //     bookmarks:
+  //         data?['bookmarks'] is Iterable ? List.from(data?['bookmarks']) : null,
+  //   );
+  //   return item;
+  // }
+
   Map<dynamic, dynamic> toMap() {
     return {
       'name': name,

@@ -39,7 +39,7 @@ class FirebaseAuthService {
       var data = Account(name, user.uid, email);
       await user.updateDisplayName(name).then(
             (_) => {
-              _db.collection("users").doc(user.uid).set(data.toMap()),
+              _db.collection("users").doc(user.uid).set(data.toFirestore()),
               // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
               //     content: Text('Account created successfully.'))),
               // Navigator.push(

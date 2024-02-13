@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:futamap/components/buttons.dart';
 import 'package:futamap/components/rating_bar.dart';
+import 'package:futamap/data/model/account.dart';
 import 'package:futamap/data/model/location.dart';
 import 'package:futamap/screens/home/navigation.dart';
 import '../../theme/colors.dart' as futa_map_colors;
@@ -18,6 +21,28 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
   late double _deviceHeight, _deviceWidth;
   int currentPageIndex = 1;
   double rating = 0.0;
+  var user = FirebaseAuth.instance.currentUser;
+  Account? account;
+
+  bool bookmarked = false;
+
+  @override
+  void initState() {
+    super.initState();
+    if (user != null) {
+      _getUserInfo(user!).then(
+        (value) => {setState(() => account = value)},
+      );
+    }
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final args = ModalRoute.of(context)!.settings.arguments as Location;
+    setState(() => bookmarked = account?.bookmarks?.contains(args.id) ?? false);
+  }
+
   @override
   Widget build(BuildContext context) {
     _deviceHeight = MediaQuery.of(context).size.height;
@@ -28,6 +53,7 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
       backgroundColor: futa_map_colors.Colors.background,
       appBar: AppBar(
         elevation: 0,
+        backgroundColor: futa_map_colors.Colors.primary,
         leading: IconButton(
           icon: const Icon(Icons.chevron_left),
           iconSize: 30,
@@ -43,7 +69,7 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
             width: _deviceWidth,
             height: _deviceHeight * .45,
             child: Container(
-                color: Colors.blue,
+                color: futa_map_colors.Colors.primary,
                 child: args.images?.first.toString().isNotEmpty ?? false
                     ? Image.network(
                         args.images?.first.toString() ?? "",
@@ -66,12 +92,18 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
                     ),
                   ),
                 ),
-                Icon(
-                  args.isFavorite ?? false
-                      ? Icons.bookmark
-                      : Icons.bookmark_border_outlined,
-                  size: 30,
-                  color: futa_map_colors.Colors.primary,
+                InkWell(
+                  onTap: () => {
+                    _bookmarkLocation(user!, args.id),
+                    setState(() => bookmarked = !bookmarked)
+                  },
+                  child: Icon(
+                    account?.bookmarks?.contains(args.id) ?? false
+                        ? Icons.bookmark
+                        : Icons.bookmark_border_outlined,
+                    size: 30,
+                    color: futa_map_colors.Colors.primary,
+                  ),
                 ),
               ],
             ),
@@ -185,5 +217,38 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
         ],
       ),
     );
+  }
+
+  Future<Account?> _getUserInfo(User user) async {
+    debugPrint("${user.uid}");
+    Account? account;
+    try {
+      var db = FirebaseFirestore.instance;
+      await db.collection("users").doc(user.uid).get().then(
+            (value) => {account = Account.fromFirestore(value, null)},
+          );
+      // setState(() => _isLoading = false);
+      return account;
+    } catch (e) {
+      // setState(() => _isLoading = false);
+      debugPrint('$e');
+      return null;
+    }
+  }
+
+  Future<void> _bookmarkLocation(User user, String id) async {
+    var bookmarks = account?.bookmarks ?? [];
+    bookmarks.contains(id) ? bookmarks.remove(id) : bookmarks.add(id);
+    try {
+      var db = FirebaseFirestore.instance;
+      await db
+          .collection("users")
+          .doc(user.uid)
+          .update({"bookmarks": bookmarks});
+      // setState(() => _isLoading = false);
+    } catch (e) {
+      // setState(() => _isLoading = false);
+      debugPrint('$e');
+    }
   }
 }

@@ -280,7 +280,7 @@ class _SignupScreenState extends State<SignupScreen> {
       var data = Account(name, user.uid, email);
       await user.updateDisplayName(name).then(
             (_) => {
-              db.collection("users").doc(user.uid).set(data.toMap()).then(
+              db.collection("users").doc(user.uid).set(data.toFirestore()).then(
                     (value) => {
                       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                           content: Text('Account created successfully.'))),

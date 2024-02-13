@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:futamap/util/consts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -34,6 +35,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
   @override
   void initState() {
     super.initState();
+    // FirebaseAuth.instance.signOut();
     getLocations();
     getLocation().then((_) => {
           if (destination != null)
