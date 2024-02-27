@@ -1,6 +1,8 @@
 // ignore_for_file: unused_local_variable
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:futamap/components/empty.dart';
 import 'package:futamap/components/location.dart';
@@ -30,6 +32,7 @@ class _PlacesScreenState extends State<PlacesScreen> {
   void initState() {
     super.initState();
     getLocations();
+    // FirebaseAuth.instance.signOut();
   }
 
   @override

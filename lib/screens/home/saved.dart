@@ -206,7 +206,7 @@ class _SavedScreenState extends State<SavedScreen> {
   }
 
   Future<void> _getLocations() async {
-    debugPrint("GetLocations called");
+    debugPrint("GetLocations called: $account");
     List<Location> locations = [];
     await _db.collection('places').get().then(
           (value) => {

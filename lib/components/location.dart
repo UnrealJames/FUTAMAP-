@@ -24,10 +24,11 @@ Widget locationComponent({
         children: [
           SizedBox(
             height: 150,
+            width: double.infinity,
             child: Container(
               clipBehavior: Clip.hardEdge,
               decoration: BoxDecoration(
-                color: futa_map_colors.Colors.primary,
+                // color: futa_map_colors.Colors.primary,
                 borderRadius: BorderRadius.circular(16),
               ),
               child: location.images?.first.toString().isNotEmpty ?? false
@@ -35,7 +36,10 @@ Widget locationComponent({
                       location.images?.first.toString() ?? "",
                       fit: BoxFit.cover,
                     )
-                  : const SizedBox(),
+                  : Image.asset(
+                      "assets/images/icon.png",
+                      fit: BoxFit.fill,
+                    ),
             ),
           ),
           Container(
